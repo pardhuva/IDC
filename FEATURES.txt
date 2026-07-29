@@ -1,0 +1,244 @@
+================================================================================
+        INTERN DIGITAL COMPANION (IDC) — FEATURE LIST
+        ISRO Internship Lifecycle Management System
+        Stack: React + Vite | FastAPI + SQLAlchemy + SQLite
+================================================================================
+
+1. AUTHENTICATION & ROLE-BASED ACCESS CONTROL
+   - JWT-based login/register with bcrypt password hashing
+   - Three roles: Intern, Guide, Coordinator
+   - Role-based route protection and UI rendering
+   - Each role sees a different dashboard and sidebar navigation
+
+2. INTERN PROFILE MANAGEMENT
+   - Interns create/edit their profile (department, college, phone, duration)
+   - Internship duration tracked in months with joining date
+   - 9-stage progress pipeline: Registered → Docs Uploaded → Verified →
+     Guide Assigned → Project Allocated → Active → Presentation →
+     Evaluation → Completed
+   - Duration tracker with days done/left and progress bar
+
+3. DOCUMENT MANAGEMENT
+   - Interns upload documents (ID proof, joining letter, etc.)
+   - Coordinators verify/reject uploaded documents
+   - Status tracking: pending, verified, rejected
+
+4. ONBOARDING CHECKLIST
+   - Pre-defined checklist items for new interns
+   - Track completion percentage
+   - Items auto-initialized on first visit
+
+5. CAMPUS GUIDE & OFFICE DIRECTORY
+   - Office listings with location, timings, contact info
+   - Campus announcements from coordinators
+   - Contact directory for important personnel
+
+6. FAQ SYSTEM
+   - Coordinators add FAQs; interns browse and search
+   - 40 ISRO-specific FAQs seeded (cafeteria, WiFi, ID card, PSLV schedule,
+     satellite testing lab, ISTRAC hours, clean room, digital library, etc.)
+
+7. GUIDE ASSIGNMENT
+   - Coordinators assign guides to interns
+   - Guides see their assigned interns list
+   - Interns see their assigned guide info
+
+8. PROJECT & TASK MANAGEMENT
+   - Coordinators/guides create projects and assign to interns
+   - Task creation with status tracking (todo, in_progress, done)
+   - Task assignment per project
+
+9. DAILY DIARY
+   - Interns write daily entries: activities, learning outcomes, challenges,
+     hours worked
+   - Guides review, comment on, and approve diary entries
+   - Date-wise tracking
+
+10. WEEKLY REPORTS
+    - Manual report generation for a date range
+    - Report submission workflow: draft → submitted → reviewed
+    - Guide feedback on submitted reports
+
+11. EVENTS MANAGEMENT
+    - ISRO events: launches, seminars, workshops, visits, celebrations
+    - Featured event hero card with compact grid for additional featured events
+    - Upcoming and past event sections
+    - Coordinators can create events
+
+12. ABOUT ISRO
+    - Key achievements: Chandrayaan-3, Mars Orbiter, Gaganyaan, PSLV, Aditya-L1, NavIC
+    - Quick stats, vision statement
+    - Articles/resources section managed by coordinators
+
+13. NOTIFICATIONS
+    - System notifications for interns (document verified, guide assigned, etc.)
+    - Mark as read / mark all read
+    - Unread count on dashboard
+
+14. FEEDBACK SYSTEM
+    - Interns submit end-of-internship feedback: rating, experience, best/worst
+      parts, suggestions, recommendation
+    - Coordinators view all feedback
+    - Star rating widget with visual toggle for recommendation
+
+15. CONTACTS MANAGEMENT
+    - Coordinators manage contact directory
+    - Searchable contact list for interns
+
+--------------------------------------------------------------------------------
+                        AI / ML FEATURES
+--------------------------------------------------------------------------------
+
+16. AI-POWERED SEMANTIC SEARCH
+    Model: Sentence-Transformers (all-MiniLM-L6-v2) + FAISS
+    - Encodes all campus data (offices, FAQs, contacts, announcements) into
+      384-dimensional vector embeddings
+    - User query is encoded and matched via FAISS cosine similarity
+    - Returns top-K results with relevance scores and source type
+    - Index rebuilds on demand via /ai/rebuild-index
+
+17. INTENT CLASSIFICATION
+    Model: TF-IDF Vectorizer + Logistic Regression (scikit-learn)
+    - Classifies user queries into 10 intents: canteen_food, wifi_internet,
+      identity_issue, transport, medical_help, document_query, leave_policy,
+      project_task, facilities_general, other
+    - Trained on labeled intent data; retrainable via /ai/retrain
+    - Returns predicted intent, confidence score, and suggested action/navigation
+
+18. SENTIMENT ANALYSIS
+    Model: TextBlob NLP (rule-based + pattern-based)
+    - Analyzes diary entry text for polarity (-1 to +1) and subjectivity (0 to 1)
+    - Classifies mood: very_negative, negative, neutral, positive, very_positive
+    - Computes weekly sentiment averages and trend direction (improving/stable/declining)
+    - Frontend: mood emoji, color-coded timeline bars, trend indicator on Diary page
+
+19. PERFORMANCE SCORING
+    Algorithm: Weighted multi-factor scoring (0-100 scale)
+    - Task completion (30%): completed vs total assigned tasks
+    - Document timeliness (20%): verified vs total documents
+    - Diary consistency (20%): entries written vs expected working days
+    - Sentiment trend (15%): average polarity from diary sentiment
+    - Checklist progress (15%): completed vs total checklist items
+    - Returns letter grade (A/B/C/D/F), per-factor breakdown, AI recommendations
+    - Frontend: circular gauge, factor progress bars, recommendation list
+
+20. WORKLOAD PREDICTOR
+    Model: Logistic Regression (scikit-learn) trained on synthetic anchor points
+    - Features: task_completion_rate, diary_consistency, document_score,
+      checklist_progress, time_remaining_fraction, velocity_tasks_per_day
+    - Predicts completion probability (0-100%)
+    - Classifies status: "On Track" / "At Risk" / "Behind Schedule"
+    - Returns predicted end date, risk factors, actionable suggestions
+    - Coordinator overview endpoint shows all interns ranked by risk
+    - Frontend: probability display, feature weight bars, risk/suggestion cards
+
+21. TF-IDF REPORT SUMMARIZATION
+    Algorithm: TF-IDF Vectorizer + Cosine Similarity (extractive summarization)
+    - Splits text into sentences, computes TF-IDF matrix
+    - Ranks sentences by cosine similarity to document centroid
+    - Extracts top N most important sentences as summary
+    - Also extracts top TF-IDF keywords from the text
+    - Used in weekly report summarization and feedback keyword extraction
+
+22. AUTO DIARY-TO-REPORT GENERATION
+    Pipeline: Diary Entries → Text Aggregation → TF-IDF Summarizer → Report
+    - Fetches all diary entries for a given date range
+    - Combines activities, learning outcomes, and challenges text
+    - Runs TF-IDF extractive summarizer (5 sentences) + keyword extraction
+    - Creates a new weekly report with AI-generated summary
+    - Frontend: purple "Auto-Generate from Diary" button with date picker
+
+23. SENIOR INTERN TIPS (KNOWLEDGE TRANSFER)
+    Algorithm: Rating-based ranking + TF-IDF keyword extraction
+    - Aggregates anonymized feedback from previous/completed interns
+    - Ranks by rating (highest first), filters to recommenders only
+    - Extracts key themes via TF-IDF from all feedback text
+    - Returns tips with experience summaries, best parts, suggestions, keywords
+    - Frontend: dark gradient header with avg rating and keyword tags,
+      individual tip cards with Best/Tip highlights
+
+24. AI INSIGHTS DASHBOARD
+    - Dedicated page combining all AI/ML features in one view
+    - Purple "Powered by ML" hero banner
+    - Performance Score card with circular gauge and factor breakdowns
+    - Sentiment Analysis with mood timeline visualization
+    - Workload Predictor with feature weights and risk analysis
+    - Report Summarizer with keyword extraction
+    - Accessible via sidebar "AI Insights" link
+
+--------------------------------------------------------------------------------
+                        ISRO SDSC SHAR–SPECIFIC FEATURES
+--------------------------------------------------------------------------------
+
+25. SHAR CAMPUS DATA & ISRO CHECKLIST
+    - 16 real SDSC SHAR locations: Main Gate & Security, Internship Cell / HR,
+      First Launch Pad (FLP), Second Launch Pad (SLP), Vehicle Assembly Building
+      (VAB), Mission Control Centre (MCC), SPROB, ISTRAC Ground Station,
+      Township / Hostels, Mess / Canteen, Medical Centre, SHAR Library,
+      IT / Computer Centre, Training Hall, Conference Room, Sullurpeta Transport
+    - All contacts use shar-*@isro.gov.in emails and +91-8624-* phone numbers
+    - 14 ISRO-specific onboarding checklist steps: profile & photo, joining
+      report, NDA / secrecy agreement, ID proof upload, SHAR entry pass,
+      security briefing, system/network access, hostel/mess registration,
+      safety orientation, guide assignment, project allocation, workspace
+      setup, library card, medical fitness certificate
+
+26. EMERGENCY CONTACT & BLOOD GROUP ON PROFILE
+    - Emergency contact name and phone number fields
+    - Blood group dropdown (A+, A-, B+, B-, AB+, AB-, O+, O-)
+    - Accommodation type selector (Hostel / Day Scholar)
+    - Guide name and project title displayed on intern dashboard
+
+27. ISRO DOCUMENT TYPES
+    - Extended document upload dropdown with ISRO-specific types:
+      Joining Report, NDA / Secrecy Agreement, Medical Fitness Certificate,
+      No Dues Clearance, Passport Size Photo (in addition to existing types)
+
+28. COMPLETION CERTIFICATE GENERATION
+    Backend: GET /certificate/me → HTMLResponse
+    - Official ISRO SDSC SHAR styled HTML certificate
+    - Includes: intern name, college, department, project title, guide name,
+      internship duration (from/to dates)
+    - Three signature lines: Guide, Head of Division, Director SDSC SHAR
+    - Print-friendly CSS with @page rules and @media print
+    - Frontend: Certificate page with Print / Save as PDF button
+    - Accessible from sidebar and from the "Completed" stage on dashboard
+
+29. LEAVE REQUEST SYSTEM
+    - Interns apply for leave: Casual, Sick, Emergency, Holiday/Festival
+    - Date range selection with automatic day count
+    - Reason text field for justification
+    - Guides/Coordinators see pending requests and approve/reject with comments
+    - Status tracking: pending → approved / rejected
+    - Color-coded leave type badges and status indicators
+
+30. MESSAGING — DIRECT MESSAGES & GROUP CHAT
+    - 1-on-1 DM between intern and assigned guide
+    - Group chat: all interns under a guide + the guide
+    - Contact list auto-populated from guide assignments
+    - Real-time polling (5-second refresh)
+    - Chat bubble UI with sender name, timestamp, read status
+    - Guides see all their interns as DM contacts + group chat
+    - Interns see their guide as DM + team group chat
+
+--------------------------------------------------------------------------------
+                        UI / BRANDING
+--------------------------------------------------------------------------------
+
+31. ISRO BRANDING
+    - Navy blue (#002147, #003580) + Orange/Saffron (#FF671F) color scheme
+    - Custom ISRO-style SVG logo (globe, rocket, satellite orbit)
+    - Logo on sidebar, login page, and register page
+    - SVG favicon in browser tab
+    - ISRO-themed gradients on hero sections and welcome cards
+
+32. RESPONSIVE SIDEBAR NAVIGATION
+    - Collapsible sidebar with role-based navigation links
+    - Mobile hamburger menu with overlay
+    - User avatar with role badge
+    - Fixed height with scroll support
+
+================================================================================
+    Total: 32 features (17 core web + 9 AI/ML + 4 ISRO-specific + 2 UI)
+    AI/ML Stack: scikit-learn, Sentence-Transformers, FAISS, TextBlob, NumPy
+================================================================================

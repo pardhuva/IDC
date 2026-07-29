@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "idc-frontend",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\DELL\\OneDrive\\Desktop\\Pardhu\\IDC\\frontend && npm run dev"],
+      "port": 5173
+    }
+  ]
+}

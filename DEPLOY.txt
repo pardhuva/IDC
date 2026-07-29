@@ -1,0 +1,83 @@
+================================================================================
+        IDC — DEPLOYMENT GUIDE
+================================================================================
+
+OPTION 1: SINGLE SERVER (Recommended for Demo)
+-----------------------------------------------
+Run both backend and frontend from the FastAPI server.
+
+1. Build the frontend:
+   cd frontend
+   npm install
+   npm run build
+
+2. Set up the backend:
+   cd backend
+   pip install -r requirements.txt
+   python -m textblob.download_corpora
+
+3. Create backend/.env:
+   JWT_SECRET=your-secure-random-secret
+   CORS_ORIGINS=http://localhost:8000
+   DATABASE_URL=sqlite:///./idc.db
+
+4. Seed demo data:
+   cd backend
+   python seed_intents.py
+   python seed_feedback.py
+
+5. Run:
+   cd backend
+   uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+   The FastAPI server will serve the built frontend from frontend/dist/
+   and handle all API requests. Visit http://localhost:8000
+
+   For production, set VITE_API_URL="" (empty) before building frontend
+   so API calls go to the same origin.
+
+
+OPTION 2: SEPARATE SERVERS (Dev Mode)
+--------------------------------------
+1. Backend:
+   cd backend
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload --port 8000
+
+2. Frontend:
+   cd frontend
+   npm install
+   npm run dev
+
+   Visit http://localhost:5173
+
+
+ENVIRONMENT VARIABLES
+---------------------
+Backend (.env):
+  DATABASE_URL    — Database connection string (default: sqlite:///./idc.db)
+  JWT_SECRET      — Secret key for JWT token signing (auto-generated if missing)
+  CORS_ORIGINS    — Comma-separated allowed origins
+
+Frontend (.env):
+  VITE_API_URL    — Backend API URL (default: http://localhost:8000)
+                    Set to "" for same-origin deployment
+
+
+DEMO ACCOUNTS (after seeding)
+------------------------------
+  Coordinator:  (register a new coordinator account)
+  Intern:       intern2@test.com / test123
+  Guide:        (register a new guide account)
+
+
+PRODUCTION CHECKLIST
+---------------------
+[ ] Set a strong JWT_SECRET in .env (never use the default)
+[ ] Set CORS_ORIGINS to your actual domain
+[ ] Build frontend with: VITE_API_URL="" npm run build
+[ ] Run seed scripts for demo data
+[ ] Consider using PostgreSQL instead of SQLite for production
+[ ] Set up HTTPS via reverse proxy (nginx/caddy)
+[ ] Set --workers 4 in uvicorn for multi-process serving
+================================================================================

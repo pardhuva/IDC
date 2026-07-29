@@ -1,0 +1,505 @@
+================================================================================
+     IDC - INTERN DIGITAL COMPANION | DEMO PRESENTATION GUIDE
+     For: BTP Guide Demo — ISRO SDSC SHAR, Sriharikota
+================================================================================
+
+This file is your step-by-step demo script. Follow it top to bottom.
+Time estimate: 20-25 minutes for a thorough demo.
+
+================================================================================
+SECTION 0: BEFORE THE DEMO — SETUP COMMANDS
+================================================================================
+
+Open TWO terminals:
+
+TERMINAL 1 — Backend:
+  cd IDC/backend
+  venv\Scripts\activate
+  uvicorn app.main:app --reload --port 8000
+
+TERMINAL 2 — Frontend:
+  cd IDC/frontend
+  npm run dev
+
+Open browser: http://localhost:5173
+
+TIP: Open the backend first and wait 5-10 seconds. The AI semantic search
+model (Sentence-Transformers) loads in the background (~30-60 seconds on
+first request). To warm it up, open a second browser tab and hit:
+  http://localhost:8000/ai/search?q=test
+(with a valid auth token) — or just use the dashboard search after login.
+
+DEMO ACCOUNTS (already seeded):
+  Intern:      pardhuva / Test@123
+  Coordinator: coordinator@gmail.com / Test@123
+  Guide:       guide@gmail.com / Test@123
+
+================================================================================
+SECTION 1: INTRODUCTION (Explain before showing)
+================================================================================
+
+SAY: "This is the Intern Digital Companion — IDC. It's an AI-augmented
+internship lifecycle management system built specifically for ISRO SDSC SHAR,
+Sriharikota. It manages the entire intern journey from onboarding to
+certificate generation. It has 30 features — 15 core web features, 9 AI/ML
+features, and 4 ISRO-specific features."
+
+SAY: "There are 3 user roles: Intern, Coordinator, and Guide — each sees a
+different dashboard and navigation."
+
+================================================================================
+SECTION 2: LOGIN & REGISTRATION (1 min)
+================================================================================
+
+SHOW: Login page
+  - Point out the ISRO-style logo (globe, rocket, satellite orbit)
+  - Point out the ISRO Navy + Orange color scheme (#002147, #FF671F)
+
+DO: Login as intern (pardhuva / Test@123)
+
+SAY: "JWT-based authentication with bcrypt password hashing. Three roles
+with role-based access control — each role sees different sidebar items."
+
+SHOW: Sidebar
+  - Point out: role badge (orange for intern), navigation items
+  - Count: 16 menu items for intern role
+
+================================================================================
+SECTION 3: INTERN DASHBOARD (2 min)
+================================================================================
+
+SHOW: Dashboard page — explain each section:
+  1. Welcome card with guide name (Dr. Rao) and project (PSLV Telemetry
+     Data Analysis)
+  2. AI-Powered Search bar — "We'll come back to this"
+  3. 9-stage progress pipeline (Registered to Completed)
+  4. Duration tracker — days done, days left, progress bar
+
+SAY: "The dashboard gives an at-a-glance view of the intern's entire
+internship status."
+
+================================================================================
+SECTION 4: PROFILE (1 min)
+================================================================================
+
+CLICK: My Profile in sidebar
+
+SHOW: Profile page with fields:
+  - Department, College, Phone, Duration (in months)
+  - Blood group dropdown (A+ to O-)
+  - Accommodation type (Hostel / Day Scholar)
+  - Emergency contact name and phone
+
+SAY: "Emergency contact and blood group are important for ISRO campus
+safety — this is an ISRO-specific feature."
+
+================================================================================
+SECTION 5: DOCUMENTS (1 min)
+================================================================================
+
+CLICK: Documents in sidebar
+
+SHOW: Document upload area
+  - Point out the ISRO-specific document types in the dropdown:
+    Joining Report, NDA / Secrecy Agreement, Medical Fitness Certificate,
+    No Dues Clearance, Passport Size Photo
+  - Show uploaded documents with status (pending / verified / rejected)
+
+SAY: "Coordinators verify these documents. Status tracking ensures nothing
+falls through the cracks."
+
+================================================================================
+SECTION 6: ONBOARDING CHECKLIST (1 min)
+================================================================================
+
+CLICK: Checklist in sidebar
+
+SHOW: 14 ISRO-specific checklist items:
+  - Complete profile & upload photo
+  - Submit joining report
+  - Sign NDA / Secrecy Agreement
+  - Upload ID proof
+  - Obtain SHAR Entry Pass
+  - Attend security briefing
+  - Get system/network access
+  - ... etc.
+
+SAY: "These are real SDSC SHAR onboarding steps. Progress percentage is
+tracked automatically."
+
+================================================================================
+SECTION 7: CAMPUS GUIDE (1 min)
+================================================================================
+
+CLICK: Campus Guide in sidebar
+
+SHOW: 16 SHAR campus locations with details:
+  - First Launch Pad (FLP) — PSLV missions
+  - Second Launch Pad (SLP) — GSLV/LVM3 missions
+  - Vehicle Assembly Building (VAB)
+  - Mission Control Centre (MCC)
+  - SPROB, ISTRAC, Medical Centre, Library, etc.
+
+SAY: "All 16 real SDSC SHAR locations with descriptions, timings, and
+contact info. All phone numbers use +91-8624 (SHAR exchange) and emails
+use @isro.gov.in."
+
+================================================================================
+SECTION 8: FAQ (30 sec)
+================================================================================
+
+CLICK: FAQ in sidebar
+
+SHOW: 40 ISRO-specific FAQs
+  - "Where is the mess/canteen?", "WiFi password?", "PSLV launch schedule?"
+  - Search/filter functionality
+
+SAY: "40 pre-seeded FAQs covering everything an intern would ask at SHAR."
+
+================================================================================
+SECTION 9: PROJECT & TASKS (1 min)
+================================================================================
+
+CLICK: My Project → show "PSLV Telemetry Data Analysis" project
+CLICK: Tasks → show assigned tasks with status
+
+SAY: "Projects are assigned by guides/coordinators. Tasks have priority
+levels and status tracking."
+
+================================================================================
+SECTION 10: DAILY DIARY (1 min)
+================================================================================
+
+CLICK: Daily Diary in sidebar
+
+SHOW: Existing diary entries with:
+  - Activities, learning outcomes, challenges, hours worked
+  - Sentiment emoji on each entry (happy/neutral/sad)
+  - Color-coded sentiment bar
+
+SAY: "Each diary entry is automatically analyzed for sentiment using
+TextBlob NLP. The mood emoji and color bar are AI-generated."
+
+================================================================================
+SECTION 11: WEEKLY REPORTS + AUTO-GENERATE (1.5 min)
+================================================================================
+
+CLICK: Weekly Reports in sidebar
+
+SHOW: Existing reports
+
+DO: Click "Auto-Generate from Diary" button
+  - Select a date range that includes existing diary entries
+  - Click Generate
+
+SAY: "This is one of our AI features. It fetches all diary entries in the
+date range, combines the text, runs TF-IDF extractive summarization to
+pick the 5 most important sentences, extracts keywords, and creates a
+weekly report automatically. No manual writing needed."
+
+EXPLAIN: "TF-IDF — Term Frequency-Inverse Document Frequency — weighs
+words by importance. Cosine similarity ranks sentences against the
+document centroid to extract the most representative ones."
+
+================================================================================
+SECTION 12: AI-POWERED SEARCH (2 min) — KEY DEMO MOMENT
+================================================================================
+
+GO BACK TO: Dashboard
+
+DO: Type "where is the launch pad" in the search bar and hit Search
+
+SHOW: Results with percentage match scores:
+  - First Launch Pad (FLP) — ~61%
+  - Second Launch Pad (SLP) — ~51%
+  - MCC — ~34%
+
+SAY: "This is semantic search — not keyword matching. It uses
+Sentence-Transformers (all-MiniLM-L6-v2) to encode the query into a
+384-dimensional vector, then uses FAISS to find the most similar vectors
+from our campus data. It searches across FAQs, office locations, contacts,
+and announcements simultaneously."
+
+DO: Try another query: "lunch timings" or "canteen food"
+  - Show it finds Mess/Canteen + related FAQ
+
+SAY: "Notice it finds 'Mess/Canteen' even though I said 'lunch' — that's
+semantic understanding, not just keyword matching."
+
+================================================================================
+SECTION 13: INTENT CLASSIFICATION (1 min)
+================================================================================
+
+CLICK: AI Insights in sidebar (or show via dashboard)
+
+SAY: "We also have intent classification. When someone types 'lunch
+timings', it classifies the intent as 'canteen_food' with a confidence
+score. The model uses TF-IDF + Logistic Regression trained on labeled
+data with 10 intent categories."
+
+SHOW: The 10 intents: canteen_food, wifi_internet, identity_issue,
+transport, medical_help, document_query, leave_policy, project_task,
+facilities_general, other
+
+================================================================================
+SECTION 14: AI INSIGHTS DASHBOARD (2 min)
+================================================================================
+
+CLICK: AI Insights in sidebar
+
+SHOW each card:
+  1. Performance Score — circular gauge (0-100)
+     - 5 weighted factors: Task completion (30%), Document timeliness (20%),
+       Diary consistency (20%), Sentiment trend (15%), Checklist progress (15%)
+     - Letter grade (A/B/C/D/F) and recommendations
+
+  2. Sentiment Analysis — mood timeline
+     - Weekly averages, trend direction (improving/stable/declining)
+
+  3. Workload Predictor — completion probability
+     - Uses Logistic Regression on 6 features
+     - Shows "On Track" / "At Risk" / "Behind Schedule"
+     - Risk factors and suggestions
+
+SAY: "All of this is computed in real-time from the intern's actual data —
+diary entries, tasks, documents, checklist. No hardcoded values."
+
+================================================================================
+SECTION 15: CERTIFICATE (30 sec)
+================================================================================
+
+CLICK: Certificate in sidebar
+
+SHOW: Official ISRO SDSC SHAR styled certificate with:
+  - Intern name, college, department
+  - Project title, guide name
+  - Internship dates
+  - Three signature lines: Guide, Head of Division, Director SDSC SHAR
+
+DO: Click "Print / Save as PDF" button
+
+SAY: "The certificate is generated dynamically from the database. It
+includes the actual guide name, project title, and dates."
+
+================================================================================
+SECTION 16: LEAVE REQUEST (1.5 min)
+================================================================================
+
+CLICK: Leave Requests in sidebar
+
+DO: Click "Apply for Leave"
+  - Select type: Casual Leave
+  - From: pick a date next week
+  - To: same or next day
+  - Reason: "Personal work at home"
+  - Click Submit
+
+SHOW: The request appears with "Pending" status in yellow
+
+SAY: "Interns can apply for leave — casual, sick, emergency, or holiday.
+The request goes to their assigned guide for approval. Let's see the
+guide's view in a moment."
+
+================================================================================
+SECTION 17: MESSAGING — DM & GROUP CHAT (2 min)
+================================================================================
+
+CLICK: Messages in sidebar
+
+SHOW: Contact list with:
+  - Dr. Rao (DM — direct message to guide)
+  - Dr. Rao's Team (Group — all interns under this guide)
+
+DO: Click on "Dr. Rao" → send a DM: "Good morning sir, I have a question
+about the telemetry data format."
+
+DO: Click back → Click on "Dr. Rao's Team" → send a group message:
+"Hey team! Anyone know where the telemetry archives are?"
+
+SAY: "Interns can directly message their guide for one-on-one questions,
+and there's a group chat where all interns under the same guide can
+collaborate. The guide sees both channels too. Messages auto-refresh
+every 5 seconds."
+
+================================================================================
+SECTION 18: SWITCH TO COORDINATOR (2 min)
+================================================================================
+
+DO: Logout → Login as coordinator@gmail.com / Test@123
+
+SHOW: Different sidebar — coordinator sees:
+  - All Interns, Guide Assignment, Campus Management, FAQ Management,
+    Announcements, Documents, Contacts, Events, Feedback
+
+DEMO:
+  1. Guide Assignment — show how to assign a guide to an intern
+  2. Announcements — show creating an announcement
+  3. Feedback — show collected feedback from interns with ratings
+
+SAY: "The coordinator manages the internship program — assigns guides,
+verifies documents, creates events, and monitors feedback."
+
+================================================================================
+SECTION 19: SWITCH TO GUIDE (2 min)
+================================================================================
+
+DO: Logout → Login as guide@gmail.com / Test@123
+
+SHOW: Different sidebar — guide sees:
+  - My Interns, Projects, Tasks, Diary Review, Reports Review,
+    Leave Approvals, Messages
+
+DEMO:
+  1. My Interns — show assigned interns list
+  2. Diary Review — show how to comment/approve diary entries
+  3. Leave Approvals — show the pending leave request from pardhuva
+     → Click Approve with comment: "Approved. Enjoy your day off!"
+  4. Messages — show DM from pardhuva, reply to it
+     → Switch to Group Chat, send: "Team: submit weekly reports by Friday"
+
+SAY: "The guide can approve leave, message interns directly, and
+broadcast to all their interns via group chat."
+
+================================================================================
+SECTION 20: EVENTS & ABOUT ISRO (30 sec)
+================================================================================
+
+SHOW: Events page — ISRO events (launches, seminars, workshops)
+SHOW: About ISRO page — achievements (Chandrayaan-3, Mars Orbiter,
+  Gaganyaan, PSLV, Aditya-L1, NavIC)
+
+================================================================================
+SECTION 21: SENIOR INTERN TIPS (30 sec)
+================================================================================
+
+SHOW: On Feedback page → Senior Intern Tips section
+  - Aggregated anonymized feedback from previous interns
+  - TF-IDF extracted keywords
+  - Tips ranked by rating
+
+SAY: "Knowledge transfer from previous interns to new ones — all
+AI-extracted from past feedback data."
+
+================================================================================
+SECTION 22: CLOSING SUMMARY
+================================================================================
+
+SAY: "To summarize, IDC has:
+  - 32 features total
+  - 17 core web features for managing the entire internship lifecycle
+  - 9 AI/ML features using 5 different algorithms
+  - 4 ISRO SDSC SHAR specific customizations
+  - 2 UI/branding features
+  - 3 user roles with role-based access
+  - Leave request workflow and real-time messaging
+  - ISRO branding with responsive design"
+
+================================================================================
+RUN COMMANDS (QUICK REFERENCE)
+================================================================================
+
+FIRST TIME SETUP:
+  # Backend
+  cd IDC/backend
+  python -m venv venv
+  venv\Scripts\activate                  # Windows
+  pip install -r requirements.txt
+  python -m textblob.download_corpora
+  python seed_intents.py
+  python seed_feedback.py
+
+  # Frontend
+  cd IDC/frontend
+  npm install
+
+DAILY RUN (after setup is done):
+  # Terminal 1 — Backend
+  cd IDC/backend
+  venv\Scripts\activate
+  uvicorn app.main:app --reload --port 8000
+
+  # Terminal 2 — Frontend
+  cd IDC/frontend
+  npm run dev
+
+  # Open browser
+  http://localhost:5173
+
+================================================================================
+TECH STACK — WHAT AND WHY
+================================================================================
+
+FRONTEND:
+---------------------------------------------------------------------------
+| Technology        | Version | Used For                                  |
+---------------------------------------------------------------------------
+| React             | 18.3    | UI component library — builds the entire  |
+|                   |         | single-page application (SPA)             |
+| Vite              | 5.4     | Build tool & dev server — fast hot module  |
+|                   |         | replacement (HMR) during development      |
+| React Router DOM  | 6.26    | Client-side routing — handles page         |
+|                   |         | navigation without full page reloads      |
+| Axios             | 1.7     | HTTP client — makes API calls to the       |
+|                   |         | FastAPI backend with JWT auth headers     |
+| React Icons (Fi)  | 5.7     | Icon library — sidebar and UI icons        |
+|                   |         | (Feather icon set)                        |
+---------------------------------------------------------------------------
+
+BACKEND:
+---------------------------------------------------------------------------
+| Technology        | Version | Used For                                  |
+---------------------------------------------------------------------------
+| FastAPI           | 0.115   | Web framework — handles all REST API       |
+|                   |         | endpoints, request validation, CORS       |
+| SQLAlchemy        | 2.0     | ORM (Object-Relational Mapper) — maps      |
+|                   |         | Python classes to database tables          |
+| SQLite            | built-in| Database — stores all application data     |
+|                   |         | (users, profiles, tasks, diary, etc.)     |
+| Uvicorn           | 0.30    | ASGI server — runs the FastAPI application |
+|                   |         | with async support and hot reload         |
+| Python-Jose       | 3.3     | JWT (JSON Web Tokens) — generates and      |
+|                   |         | verifies authentication tokens            |
+| bcrypt            | 4.2     | Password hashing — securely stores         |
+|                   |         | passwords (one-way hash, not encryption)  |
+| Pydantic          | 2.x     | Data validation — validates request/       |
+|                   |         | response schemas automatically            |
+---------------------------------------------------------------------------
+
+AI / ML:
+---------------------------------------------------------------------------
+| Technology          | Version | Used For                                |
+---------------------------------------------------------------------------
+| scikit-learn        | 1.3+    | ML framework — TF-IDF vectorizer,       |
+|                     |         | Logistic Regression (intent classifier, |
+|                     |         | workload predictor), cosine similarity  |
+| Sentence-           | 2.2+    | Semantic search — encodes text into      |
+|   Transformers      |         | 384-dim vectors using all-MiniLM-L6-v2  |
+|                     |         | (pre-trained transformer model, 22M     |
+|                     |         | parameters)                             |
+| FAISS (faiss-cpu)   | 1.7+    | Vector similarity search — Facebook AI   |
+|                     |         | library for fast nearest-neighbor lookup |
+|                     |         | on embedding vectors                    |
+| TextBlob            | 0.18+   | Sentiment analysis — rule-based NLP for  |
+|                     |         | polarity (-1 to +1) and subjectivity    |
+|                     |         | scoring of diary entries                |
+| NumPy               | 1.24+   | Numerical computing — array operations   |
+|                     |         | for ML feature vectors and scoring      |
+---------------------------------------------------------------------------
+
+WHICH AI/ML ALGORITHM IS USED WHERE:
+---------------------------------------------------------------------------
+| Feature                  | Algorithm                                   |
+---------------------------------------------------------------------------
+| Semantic Search          | Sentence-Transformers + FAISS cosine sim     |
+| Intent Classification    | TF-IDF + Logistic Regression                |
+| Sentiment Analysis       | TextBlob (rule-based + pattern-based NLP)   |
+| Performance Scoring      | Weighted multi-factor formula (5 factors)   |
+| Workload Prediction      | Logistic Regression (6 features)            |
+| Report Summarization     | TF-IDF + Cosine Similarity (extractive)     |
+| Auto Diary-to-Report     | TF-IDF Summarizer pipeline                  |
+| Senior Intern Tips       | Rating ranking + TF-IDF keyword extraction  |
+---------------------------------------------------------------------------
+
+================================================================================
+END OF DEMO GUIDE
+================================================================================
