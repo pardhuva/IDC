@@ -16,8 +16,10 @@ class WeeklyReportOut(BaseModel):
     week_start: date
     week_end: date
     summary: str
+    status: str = "draft"
     guide_feedback: Optional[str] = None
     created_at: datetime
+    intern_name: Optional[str] = None
 
     class Config:
         from_attributes = True

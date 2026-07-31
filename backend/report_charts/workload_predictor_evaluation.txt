@@ -1,0 +1,19 @@
+WORKLOAD PREDICTOR — Model Details
+============================================================
+
+Model: Logistic Regression (sklearn)
+Training data: 8 synthetic anchor points (4 positive, 4 negative)
+Features (6):
+  1. Task Rate: coefficient = 0.5770
+  2. Diary Rate: coefficient = 0.5059
+  3. Doc Score: coefficient = 0.4807
+  4. Checklist Rate: coefficient = 0.5770
+  5. Time Remaining: coefficient = 0.3900
+  6. Velocity: coefficient = 0.5770
+
+Intercept: -1.4281
+
+Status thresholds:
+  - On Track: probability >= 70%
+  - At Risk: 40% <= probability < 70%
+  - Behind Schedule: probability < 40%

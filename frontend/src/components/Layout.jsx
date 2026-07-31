@@ -4,7 +4,7 @@ import {
   FiHome, FiUser, FiFileText, FiCheckSquare, FiMap, FiHelpCircle,
   FiBriefcase, FiList, FiBook, FiBarChart2, FiBell, FiUsers,
   FiUserPlus, FiSettings, FiMessageSquare, FiLogOut, FiPhone, FiVolume2, FiMenu, FiX,
-  FiCalendar, FiGlobe, FiStar, FiCpu, FiAward, FiSend, FiCoffee
+  FiCalendar, FiGlobe, FiStar, FiCpu, FiAward, FiSend, FiCoffee, FiActivity
 } from 'react-icons/fi'
 import { useState } from 'react'
 
@@ -23,6 +23,7 @@ const navConfig = {
     { to: '/notifications', icon: FiBell, label: 'Notifications' },
     { to: '/events', icon: FiCalendar, label: 'Events' },
     { to: '/ai-insights', icon: FiCpu, label: 'AI Insights' },
+    { to: '/ml-evaluation', icon: FiActivity, label: 'ML Evaluation' },
     { to: '/leave', icon: FiCoffee, label: 'Leave Requests' },
     { to: '/messages', icon: FiSend, label: 'Messages' },
     { to: '/certificate', icon: FiAward, label: 'Certificate' },

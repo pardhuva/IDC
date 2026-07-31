@@ -50,12 +50,10 @@ def list_announcements(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    query = db.query(Announcement)
-    # Filter by target role if set
-    announcements = query.all()
+    announcements = db.query(Announcement).all()
     return [
         a for a in announcements
-        if a.target_role is None or a.target_role == user.role
+        if a.target_role in (None, "all") or a.target_role == user.role
     ]
 
 

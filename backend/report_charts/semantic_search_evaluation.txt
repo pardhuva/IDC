@@ -1,0 +1,21 @@
+SEMANTIC SEARCH — Retrieval Accuracy Evaluation
+============================================================
+
+Model: all-MiniLM-L6-v2 (22M params, 384-dim embeddings)
+Index: FAISS IndexFlatIP (cosine similarity via normalized inner product)
+Corpus: 48 documents (16 offices, 18 FAQs, 8 contacts, 6 announcements)
+
+Test queries: 8
+Hit@1 (Top-1 Accuracy): 3/8 = 37.50%
+Hit@3 (Top-3 Accuracy): 6/8 = 75.00%
+Hit@5 (Top-5 Accuracy): 6/8 = 75.00%
+
+Detailed Results:
+  Q: 'where is the launch pad' -> Top1: 'First Launch Pad (FL' (score: 0.634) | Expected: 'First Launch Pad (FL' | Hit@1: YES
+  Q: 'canteen food timings' -> Top1: 'Where can I have lun' (score: 0.465) | Expected: 'Mess / Canteen' | Hit@1: NO
+  Q: 'wifi password' -> Top1: 'How do I get WiFi ac' (score: 0.632) | Expected: 'IT / Computer Centre' | Hit@1: NO
+  Q: 'medical help emergency' -> Top1: 'What should I do if ' (score: 0.586) | Expected: 'Medical Centre' | Hit@1: NO
+  Q: 'library books borrow' -> Top1: 'How do I access the ' (score: 0.547) | Expected: 'SHAR Library' | Hit@1: NO
+  Q: 'how to get ID card' -> Top1: 'How do I get my ID c' (score: 0.674) | Expected: 'Main Gate & Security' | Hit@1: NO
+  Q: 'vehicle assembly building' -> Top1: 'Vehicle Assembly Bui' (score: 0.546) | Expected: 'Vehicle Assembly Bui' | Hit@1: YES
+  Q: 'mission control centre' -> Top1: 'Mission Control Cent' (score: 0.729) | Expected: 'Mission Control Cent' | Hit@1: YES

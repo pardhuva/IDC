@@ -33,7 +33,7 @@ img { max-width: 100%; }
 .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
 .sidebar-link {
   display: flex; align-items: center; gap: 12px; padding: 10px 20px;
-  font-size: 14px; color: #a0aec0; transition: all 0.15s;
+  font-size: 15.5px; color: #a0aec0; transition: all 0.15s; font-weight: 500;
   border-left: 3px solid transparent;
 }
 .sidebar-link:hover { color: #e2e8f0; background: rgba(255,255,255,0.05); }

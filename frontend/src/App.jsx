@@ -25,6 +25,7 @@ import AIInsights from './pages/AIInsights.jsx'
 import Certificate from './pages/Certificate.jsx'
 import LeaveRequests from './pages/LeaveRequests.jsx'
 import Messages from './pages/Messages.jsx'
+import MLEvaluation from './pages/MLEvaluation.jsx'
 
 function RequireAuth({ children }) {
   const { token, loading } = useAuth()
@@ -67,6 +68,7 @@ function AppRoutes() {
         <Route path="/certificate" element={<Certificate />} />
         <Route path="/leave" element={<LeaveRequests />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/ml-evaluation" element={<MLEvaluation />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

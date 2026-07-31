@@ -98,6 +98,32 @@ def health():
     return {"status": "ok"}
 
 
+# Serve ML evaluation charts as static files
+_charts_dir = Path(__file__).resolve().parent.parent / "report_charts"
+if _charts_dir.is_dir():
+    app.mount("/charts", StaticFiles(directory=str(_charts_dir)), name="charts")
+
+
+@app.get("/api/ml-metrics")
+def get_ml_metrics():
+    """Return all ML evaluation metrics for the charts page."""
+    import os
+    charts_dir = Path(__file__).resolve().parent.parent / "report_charts"
+    metrics = {}
+    for txt_file in ["intent_classification_report.txt", "semantic_search_evaluation.txt",
+                     "sentiment_analysis_evaluation.txt", "workload_predictor_evaluation.txt",
+                     "tfidf_summarizer_example.txt"]:
+        fp = charts_dir / txt_file
+        if fp.exists():
+            metrics[txt_file.replace(".txt", "")] = fp.read_text(encoding="utf-8")
+    charts = []
+    if charts_dir.is_dir():
+        for f in sorted(os.listdir(charts_dir)):
+            if f.endswith(".png"):
+                charts.append(f"/charts/{f}")
+    return {"metrics": metrics, "charts": charts}
+
+
 # Serve built frontend in production
 _frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
 if _frontend_dist.is_dir():
@@ -110,4 +136,7 @@ if _frontend_dist.is_dir():
         file_path = _frontend_dist / full_path
         if file_path.is_file():
             return FileResponse(str(file_path))
-        return FileResponse(str(_frontend_dist / "index.html"))
+        return FileResponse(
+            str(_frontend_dist / "index.html"),
+            headers={"Cache-Control": "no-cache, no-store, must-revalidate"},
+        )

@@ -55,6 +55,48 @@ def list_own_reports(
     return db.query(WeeklyReport).filter(WeeklyReport.intern_id == profile.id).order_by(WeeklyReport.week_start.desc()).all()
 
 
+@router.get("/", response_model=List[WeeklyReportOut])
+def list_all_reports(
+    db: Session = Depends(get_db),
+    user: User = Depends(require_role("guide")),
+):
+    from app.models.guide_assignment import GuideAssignment
+    assignments = db.query(GuideAssignment).filter(GuideAssignment.guide_id == user.id).all()
+    intern_ids = [a.intern_id for a in assignments]
+    if not intern_ids:
+        return []
+    reports = db.query(WeeklyReport).filter(WeeklyReport.intern_id.in_(intern_ids)).order_by(WeeklyReport.week_start.desc()).all()
+    result = []
+    for r in reports:
+        profile = db.query(InternProfile).filter(InternProfile.id == r.intern_id).first()
+        name = "Intern"
+        if profile:
+            u = db.query(User).filter(User.id == profile.user_id).first()
+            if u:
+                name = u.name
+        out = WeeklyReportOut.model_validate(r)
+        out.intern_name = name
+        result.append(out)
+    return result
+
+
+@router.put("/{report_id}/submit", response_model=WeeklyReportOut)
+def submit_report(
+    report_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    report = db.query(WeeklyReport).filter(WeeklyReport.id == report_id).first()
+    if not report:
+        raise HTTPException(status_code=404, detail="Report not found")
+    report.status = "submitted"
+    from datetime import datetime
+    report.submitted_at = datetime.utcnow()
+    db.commit()
+    db.refresh(report)
+    return report
+
+
 @router.post("/generate", response_model=WeeklyReportOut, status_code=status.HTTP_201_CREATED)
 def generate_report(
     payload: GenerateReportPayload,

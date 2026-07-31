@@ -1,0 +1,28 @@
+SENTIMENT ANALYSIS — Validation Results
+============================================================
+
+Model: TextBlob (rule-based + pattern-based NLP)
+Output: Polarity (-1 to +1), Subjectivity (0 to 1), Mood classification
+Mood categories: very_negative, negative, neutral, positive, very_positive
+
+Test samples: 15
+Exact match accuracy: 9/15 = 60.00%
+Adjacent match accuracy (±1 class): 14/15 = 93.33%
+
+Text                                                           Expected         Predicted        Polarity Match
+--------------------------------------------------------------------------------------------------------------
+Today was an amazing day, learned so much about PSLV systems   positive         positive            0.429 EXACT
+Great progress on the telemetry parser. Guide was very helpf   positive         positive            0.500 EXACT
+Incredible experience at the launch pad. I feel so grateful    very_positive    very_positive       1.000 EXACT
+The canteen food was good, had a productive meeting with my    positive         very_positive       0.700 CLOSE
+Wonderful day! Successfully completed the data pipeline ahea   very_positive    very_positive       0.875 EXACT
+Normal day, attended some meetings and worked on documentati   neutral          neutral             0.150 EXACT
+Routine work today, nothing special happened. Read some pape   neutral          positive            0.357 CLOSE
+Average day at the office. Did some coding and testing.        neutral          neutral            -0.150 EXACT
+Had a regular day, attended orientation session about safety   neutral          neutral             0.000 EXACT
+Today was okay, worked on the assigned tasks as planned.       neutral          positive            0.500 CLOSE
+Struggled with the code today, spent hours debugging a singl   negative         neutral            -0.086 CLOSE
+Feeling a bit overwhelmed with the workload. Too many tasks    negative         positive            0.500 MISS
+The project requirements changed again, very frustrating exp   negative         negative           -0.520 EXACT
+Not a great day, my code kept failing and I couldn't figure    negative         negative           -0.400 EXACT
+Terrible day. Nothing worked, internet was down, couldn't ac   very_negative    negative           -0.578 CLOSE

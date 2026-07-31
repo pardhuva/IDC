@@ -1,0 +1,44 @@
+TF-IDF EXTRACTIVE SUMMARIZER — Example Output
+============================================================
+
+INPUT TEXT:
+Today I worked on parsing the PSLV-C58 telemetry data files. The raw data format uses CCSDS packets
+    which needed to be decoded using the standard specification. I successfully extracted housekeeping
+    parameters from the stage-1 solid motor telemetry. The data showed nominal temperature and pressure
+    readings throughout the burn phase. I also attended a safety orientation session at the SPROB facility
+    where I learned about the solid propellant handling procedures. My guide Dr. Rao explained the importance
+    of maintaining clean room standards during motor integration. The highlight of the day was visiting the
+    Vehicle Assembly Building where I saw the LVM3 vehicle being integrated for the upcoming Gaganyaan mission.
+    I need to complete the data visualization module by next week. The Python scripts for automated parsing
+    are almost ready but need more testing with edge cases. Overall it was a very productive and exciting day
+    at SDSC SHAR Sriharikota.
+
+EXTRACTED SUMMARY (top 3 sentences):
+  [2.758] I also attended a safety orientation session at the SPROB facility
+    where I learned about the solid propellant handling procedures.
+  [2.792] My guide Dr.
+  [2.761] The highlight of the day was visiting the
+    Vehicle Assembly Building where I saw the LVM3 vehicle being integrated for the upcoming Gaganyaan mission.
+
+EXTRACTED KEYWORDS: data, vehicle, parsing, telemetry, solid, motor, day, need, today, worked
+
+ALL SENTENCE SCORES:
+  S6 (score: 2.7918): My guide Dr....
+  S8 (score: 2.7606): The highlight of the day was visiting the
+    Vehicle Assembly Building where I ...
+  S5 (score: 2.7580): I also attended a safety orientation session at the SPROB facility
+    where I l...
+  S7 (score: 2.7467): Rao explained the importance
+    of maintaining clean room standards during moto...
+  S11 (score: 2.7338): Overall it was a very productive and exciting day
+    at SDSC SHAR Sriharikota....
+  S10 (score: 2.7107): The Python scripts for automated parsing
+    are almost ready but need more test...
+  S2 (score: 2.7085): The raw data format uses CCSDS packets
+    which needed to be decoded using the ...
+  S4 (score: 2.6899): The data showed nominal temperature and pressure
+    readings throughout the bur...
+  S3 (score: 2.6397): I successfully extracted housekeeping
+    parameters from the stage-1 solid moto...
+  S9 (score: 2.6029): I need to complete the data visualization module by next week....
+  S1 (score: 2.5450): Today I worked on parsing the PSLV-C58 telemetry data files....
